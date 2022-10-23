@@ -1,0 +1,39 @@
+@echo off
+title Trash domain remover by Samu#5111
+SETLOCAL EnableExtensions EnableDelayedExpansion
+color 2
+
+call :domain set trash
+
+:start
+set /P base=Drag your base in here:
+cls
+goto trash
+
+:trash
+echo Sorting out trash domains...
+FINDSTR /L /I /P /OFF "%trash%" %base% >> %base%_Trash.txt
+FINDSTR /L /I /P /OFF /V "%trash%" %base% >> %base%_Good.txt
+timeout /t 1 >nul
+
+:findgood
+cls
+Set _File=%base%_Good.txt
+Set /a _Lines=0
+For /f %%j in ('Find "" /v /c ^< %_File%') Do Set /a _Lines=%%j
+
+:findbad
+cls
+Set File=%base%_Trash.txt
+Set /a Lines=0
+For /f %%j in ('Find "" /v /c ^< %File%') Do Set /a Lines=%%j
+color 5
+echo Good Lines: %_Lines%
+echo Bad Lines: %Lines%
+pause >nul
+cls
+exit
+
+:domain
+
+SET trash=.ru: .ua: .ua. .fm: @interia @netvigator @naver .in: .jp: .cn: @21cn @gmail @yahoo @icloud @me.com @mac.com .vn: pep4teens warming @pisz.to @poczta.fm @t-online @rediffmail @freenet .nl: .br: @wanadoo @orange @temp @besttemp @sina @eyou @ya.com .uy: .ar: .ae: @kakao @daum .kr: @foxmail @ewe @unicyc @hawaiiantel @portugalmail @hot.ee @sapo.pt 
